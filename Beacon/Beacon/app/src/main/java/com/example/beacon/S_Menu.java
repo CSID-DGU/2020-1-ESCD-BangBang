@@ -1,11 +1,13 @@
 package com.example.beacon;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +55,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
             @Override
             public void onClick(View v) {
                 notification(true, true);
+                show_dialog(true, true);
             }
         });
 
@@ -161,5 +164,58 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         // id값은
         // 정의해야하는 각 알림의 고유한 int값
         notificationManager.notify(1, builder.build());
+    }
+
+    void show_dialog(Boolean beacon, Boolean usim)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        if(beacon == false && usim == false)
+        {
+            builder.setTitle("출석 실패");
+            builder.setMessage("블루투스와 USIM 상태를 확인해주세요.");
+            builder.setPositiveButton("확인",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //DataBase에 변경된 내용 송신
+                        }
+                    });
+        }
+        else if(beacon == false && usim == true)
+        {
+            builder.setTitle("출석 실패");
+            builder.setMessage("블루투스 상태를 확인해주세요.");
+            builder.setPositiveButton("확인",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //DataBase에 변경된 내용 송신
+                        }
+                    });
+        }
+        else if(beacon == true && usim == false)
+        {
+            builder.setTitle("출석 실패");
+            builder.setMessage("USIM 상태를 확인해주세요.");
+            builder.setPositiveButton("확인",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //DataBase에 변경된 내용 송신
+                        }
+                    });
+        }
+        else
+        {
+            builder.setTitle("출석 성공");
+            builder.setMessage("정상적으로 출석이 되었습니다.");
+            builder.setPositiveButton("확인",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //DataBase에 변경된 내용 송신
+                        }
+                    });
+        }
+
+
+        builder.show();
     }
 }
