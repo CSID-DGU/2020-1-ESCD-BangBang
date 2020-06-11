@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -51,7 +52,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         attd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notification(true);
+                notification(true, true);
             }
         });
 
@@ -69,6 +70,20 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 startActivity(intent);
             }
         });
+        class NewRunnable implements Runnable {
+            @Override
+            public void run() {
+                    try{
+                        Thread.sleep(3000);
+                        notification(true, true);
+                    } catch(Exception e)
+                    {
+                    }
+                }
+        }
+        NewRunnable nr = new NewRunnable() ;
+        Thread t = new Thread(nr) ;
+        t.start() ;
     }
 
     @Override
@@ -86,14 +101,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 {
                     usim = true;
                 }
-                if(beacon == true && usim == true)
-                {
-                    notification(true);
-                }
-                else
-                {
-                    notification(false);
-                }
+                notification(beacon, usim);
             }
 
             @Override
@@ -112,15 +120,27 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         } catch (RemoteException ignored) {    }
     }
 
-    public void notification(Boolean msg)
+    public void notification(Boolean beacon, Boolean usim)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
 
-        if(msg == false)
+        if(beacon == false && usim == false)
         {
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setContentTitle("출석 싪패");
-            builder.setContentText("블루투스 또는 디바이스 상태를 확인해주세요");
+            builder.setContentText("블루투스 또는 디바이스 USIM 상태를 확인해주세요");
+        }
+        else if(beacon == false && usim == true)
+        {
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setContentTitle("출석 싪패");
+            builder.setContentText("블루투스 상태를 확인해주세요");
+        }
+        else if(beacon == true && usim == false)
+        {
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setContentTitle("출석 싪패");
+            builder.setContentText("디바이스 USIM 상태를 확인해주세요");
         }
         else
         {
