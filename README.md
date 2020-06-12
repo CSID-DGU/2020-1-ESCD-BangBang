@@ -20,5 +20,14 @@
 <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">
 
 ## demo video
-<video src="/demo/video.mp4"width='400'></video>
+video controls width="250">
+
+    <source src="/demo/video.mp4"
+            type="video/webm">
+
+    <source src="/demo/video.mp4"
+            type="video/mp4">
+
+    Sorry, your browser doesn't support embedded videos.
+</video>
 
