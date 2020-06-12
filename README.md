@@ -17,7 +17,6 @@
 * professor
 
 ## demo by function
-
 <img src="/img/image.png" width="150" height="300">
 <img src="/img/image.png" width="150" height="300">
 <img src="/img/image.png" width="150" height="300">
