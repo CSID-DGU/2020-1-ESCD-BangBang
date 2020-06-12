@@ -14,9 +14,11 @@
 
 ## 모드
 * professor
-* student      <img src="/img/main.png" width="150" height="300">
+* student     
+<img src="/img/main.png" width="150" height="300">
 
 ## demo by function
+초기 화면             ㅇㄴㅁㅇㄴㅁ
 <img src="/img/main.png" width="150" height="300">  <img src="/img/lecture_list.png" width="150" height="300">  <img src="/img/alter.png" width="150" height="300">
 
 ## demo video
