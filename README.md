@@ -20,7 +20,7 @@
 <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">
 
 ## demo video
-video controls width="250">
+<video controls width="250">
 
     <source src="/demo/video.mp4"
             type="video/webm">
