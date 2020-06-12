@@ -13,8 +13,8 @@
 * 강의실에 존재한 총 시간을 체크하는 기능
 
 ## 모드
-* student
 * professor
+* student      <img src="/img/main.png" width="150" height="300">
 
 ## demo by function
 <img src="/img/main.png" width="150" height="300">  <img src="/img/lecture_list.png" width="150" height="300">  <img src="/img/alter.png" width="150" height="300">
