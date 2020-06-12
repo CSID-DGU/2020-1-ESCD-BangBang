@@ -12,10 +12,17 @@
 * 출결을 한 이후 강의실을 떠나는 것을 인지하는 기능
 * 강의실에 존재한 총 시간을 체크하는 기능
 
-##demo<br>
+## 모드
+* student
+* professor
+
+## demo by function<br>
 <img src="/img/image.png" width="150" height="300">
 <img src="/img/image.png" width="150" height="300">
 <img src="/img/image.png" width="150" height="300">
+
+## demo video
+<video src="/video/video.mp4"></video>
 
 
 
