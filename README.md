@@ -18,8 +18,8 @@
 <img src="/img/main.png" width="150" height="300">
 
 ## demo by function
-　　　　초기 화면　　　　　　　　　　　수업 리스트　　　　　　　　　　　　usim 인식 실패 <br>
-<img src="/img/main.png" width="200" height="380">    <img src="/img/lecture_list.png" width="200" height="380">    <img src="/img/alter.png" width="250" height="380">
+　　　　초기 화면　　　　　　　　　　수업 리스트　　　　　　　　　　usim 인식 실패 <br>
+<img src="/img/main.png" width="200" height="380">    <img src="/img/lecture_list.png" width="200" height="380">    <img src="/img/alter.png" width="200" height="380">
 
 ## demo video
 <video src="/demo/video.mp4" width="200px" height="380"></video>
