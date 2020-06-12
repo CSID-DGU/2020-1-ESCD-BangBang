@@ -17,7 +17,7 @@
 * professor
 
 ## demo by function
-<img src="/img/image.png" width="150" height="300"><img src="/img/image.png" width="150" height="300"><img src="/img/image.png" width="150" height="300">
+<img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">
 
 ## demo video
 <video src="/demo/video.mp4"></video>
