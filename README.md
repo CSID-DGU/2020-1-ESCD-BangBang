@@ -20,7 +20,5 @@
 <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">
 
 ## demo video
-<iframe src="/demo/video.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-
+[![demo](/img/image.png)](/demo/video.mp4)
 
