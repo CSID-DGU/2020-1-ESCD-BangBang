@@ -20,5 +20,5 @@
 <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">
 
 ## demo video
-[![demo](/img/image.png)](/demo/video.mp4)
+<video src="/demo/video.mp4"width='400'></video>
 
