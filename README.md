@@ -16,13 +16,14 @@
 * student
 * professor
 
-## demo by function<br>
+## demo by function
+<br>
 <img src="/img/image.png" width="150" height="300">
 <img src="/img/image.png" width="150" height="300">
 <img src="/img/image.png" width="150" height="300">
 
 ## demo video
-<video src="/video/video.mp4"></video>
+<video src="/demo video/video.mp4"></video>
 
 
 
