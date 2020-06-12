@@ -4,23 +4,27 @@
 비콘 기반 스마트 출석 시스템
 ======================
 비콘을 이용하여 강의실에 입장하는 순간, 위치를 확인하여 자동으로 출석을 확인하는 솔류션이다.
-<br>
+
+
 ## 주요기능
 * 비콘을 통해서 출석하는 기능
 * 시스템을 우회하는 것을 막는 기능
 * 한사람이 다른 사람의 출석을 시도하는 것을 막는 기능
 * 출결을 한 이후 강의실을 떠나는 것을 인지하는 기능
 * 강의실에 존재한 총 시간을 체크하는 기능
-<br>
+
+
 ## 모드
 * professor
 * student     
 <img src="/img/main.png" width="200" height="380">
-<br>
+
+
 ## demo by function
 　　　　초기 화면　　　　　　　　　수업 리스트　　　　　　　　usim 인식 실패 <br>
 <img src="/img/main.png" width="200" height="380">    <img src="/img/lecture_list.png" width="200" height="380">    <img src="/img/alter.png" width="200" height="380">
-<br>
+
+
 ## demo video
 <video src="/demo/video.mp4"></video>
 
