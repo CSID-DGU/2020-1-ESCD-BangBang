@@ -18,7 +18,7 @@
 <img src="/img/main.png" width="150" height="300">
 
 ## demo by function
-초기 화면             ㅇㄴㅁㅇㄴㅁ <br>
+초기 화면 &nasp&nasp&nasp&nasp   ㅇㄴㅁㅇㄴㅁ <br>
 <img src="/img/main.png" width="150" height="300">  <img src="/img/lecture_list.png" width="150" height="300">  <img src="/img/alter.png" width="150" height="300">
 
 ## demo video
