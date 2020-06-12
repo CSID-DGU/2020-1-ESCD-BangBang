@@ -13,3 +13,4 @@
 * 강의실에 존재한 총 시간을 체크하는 기능
 
 ![ex_screenshot](./img/image.png)
+d
