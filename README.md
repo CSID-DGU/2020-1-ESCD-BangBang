@@ -20,5 +20,5 @@
 <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">  <img src="/img/image.png" width="150" height="300">
 
 ## demo video
-<video src="./demo/video.mp4" autoplay controls width="300px" height="250"></video>
+<video src="/img/image.png" autoplay controls width="300px" height="250"></video>
 
