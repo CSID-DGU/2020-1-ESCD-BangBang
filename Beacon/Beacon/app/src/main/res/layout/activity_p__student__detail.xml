@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".S_Class_Detail">
+    tools:context=".P_Student_Detail">
 
     <ImageView
         android:id="@+id/topbar"
@@ -14,21 +14,50 @@
         android:src = "@drawable/dongguk"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+
+    <Button
+        android:id="@+id/modify_attd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
-        android:id="@+id/classname"
+        android:background="#FFAE90"
+        android:text="수  정"
+        app:layout_constraintTop_toBottomOf="@+id/topbar"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+    </Button>
+
+
+    <LinearLayout
+        android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text = "과목명"
-        android:gravity="center"
-        android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@+id/topbar"
-        android:textSize="30dp">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/modify_attd"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/p_student_detail_name"
+            android:text="학생 이름"
+            android:layout_marginLeft="30dp"
+            android:textSize="25dp"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-    </TextView>
+        <TextView
+            android:id="@+id/p_student_detail_num"
+            android:text="학번"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/attd_info"
-        app:layout_constraintTop_toBottomOf="@+id/classname"
+        app:layout_constraintTop_toBottomOf="@+id/info"
         android:layout_height="wrap_content"
         android:scrollbars="horizontal|vertical"
         android:layout_width="match_parent"
@@ -42,9 +71,9 @@
             android:layout_marginTop="5dip">
 
             <TableLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/s_class_detail_table" >
+                android:id="@+id/p_student_detail_table" >
                 <View
                     android:layout_height="3dp"
                     android:layout_width="match_parent"
@@ -207,46 +236,31 @@
         >
     </View>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/last"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "KEEP IN MIND"
-        android:textColor="#000000"
-        android:textSize="30dp"
-        android:layout_marginLeft="20dp"></TextView>
-
     <LinearLayout
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
-        android:layout_marginLeft="30dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/title">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text = "HomeWork#4 6/17">
-        </TextView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text = "UI/UX 설계서 6/24"></TextView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text = "상세 설계서 6/24"></TextView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text = "중간고사 6/26"></TextView>
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/last">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text = "결석"
+            android:paddingLeft="20dp"
+            android:textSize="30dp"
+            android:textColor="#000000">
+        </TextView>
+
+        <TextView
+            android:id="@+id/absent_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "결석 회수"
+            android:textSize="20dp"
+            android:paddingLeft="20dp">
+
+        </TextView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
