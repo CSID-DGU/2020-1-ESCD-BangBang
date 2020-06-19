@@ -3,8 +3,7 @@
     android:orientation="vertical"
     android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +26,6 @@
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
     </LinearLayout>
 
     <ScrollView
@@ -162,7 +160,6 @@
                     android:layout_marginRight="10dp"
                     android:gravity="center">
                 </TextView>
-
                 <TextView
                     android:text="13주차"
                     android:textSize="20dp"

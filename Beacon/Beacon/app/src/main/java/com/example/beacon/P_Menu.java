@@ -17,7 +17,6 @@ public class P_Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p__menu);
 
-
         ListView listView = findViewById(R.id.professor_list);
         final P_menu_Adapter myAdapter = new P_menu_Adapter(this, sample.getCourses());
 

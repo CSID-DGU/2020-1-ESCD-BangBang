@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 public class P_Class_Detail extends AppCompatActivity {
 
-
     SampleData sample = new SampleData();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +24,12 @@ public class P_Class_Detail extends AppCompatActivity {
         final Button restart = findViewById(R.id.restart);
         ListView listView = findViewById(R.id.detail_list);
 
-
         Intent intent = getIntent();
         TextView classname = findViewById(R.id.classname);
         classname.setText(intent.getStringExtra("Classname"));
 
         final P_DetailAdapter myAdapter = new P_DetailAdapter(this, sample.getStudents());
         listView.setAdapter(myAdapter);
-
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +57,7 @@ public class P_Class_Detail extends AppCompatActivity {
         });
     }
 
-
-
-    void show2()
-    {
+    void show2() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("출석이 진행되었습니다.");
         builder.setPositiveButton("확인",

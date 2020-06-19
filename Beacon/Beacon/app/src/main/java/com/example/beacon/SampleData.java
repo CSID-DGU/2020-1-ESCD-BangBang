@@ -9,9 +9,7 @@ public class SampleData extends Application {
     private ArrayList<Course> courses;
     private ArrayList<Student> students;
 
-
-    public SampleData()
-    {
+    public SampleData() {
         courses = new ArrayList<Course>();
         students = new ArrayList<Student>();
 
@@ -36,7 +34,6 @@ public class SampleData extends Application {
         this.students.add(two);
         this.students.add(three);
         this.students.add(four);
-
     }
 
     public ArrayList<Course> getCourses()

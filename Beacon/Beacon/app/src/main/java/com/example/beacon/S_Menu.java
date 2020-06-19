@@ -123,30 +123,25 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         } catch (RemoteException ignored) {    }
     }
 
-    public void notification(Boolean beacon, Boolean usim)
-    {
+    public void notification(Boolean beacon, Boolean usim) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
 
-        if(beacon == false && usim == false)
-        {
+        if(beacon == false && usim == false) {
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setContentTitle("출석 싪패");
             builder.setContentText("블루투스 또는 디바이스 USIM 상태를 확인해주세요");
         }
-        else if(beacon == false && usim == true)
-        {
+        else if(beacon == false && usim == true) {
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setContentTitle("출석 싪패");
             builder.setContentText("블루투스 상태를 확인해주세요");
         }
-        else if(beacon == true && usim == false)
-        {
+        else if(beacon == true && usim == false) {
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setContentTitle("출석 싪패");
             builder.setContentText("디바이스 USIM 상태를 확인해주세요");
         }
-        else
-        {
+        else {
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setContentTitle("출석 성공");
             builder.setContentText("출석이 정상적으로 처리되었습니다.");
@@ -166,12 +161,10 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         notificationManager.notify(1, builder.build());
     }
 
-    void show_dialog(Boolean beacon, Boolean usim)
-    {
+    void show_dialog(Boolean beacon, Boolean usim) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        if(beacon == false && usim == false)
-        {
+        if(beacon == false && usim == false) {
             builder.setTitle("출석 실패");
             builder.setMessage("블루투스와 USIM 상태를 확인해주세요.");
             builder.setPositiveButton("확인",
@@ -181,8 +174,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                         }
                     });
         }
-        else if(beacon == false && usim == true)
-        {
+        else if(beacon == false && usim == true) {
             builder.setTitle("출석 실패");
             builder.setMessage("블루투스 상태를 확인해주세요.");
             builder.setPositiveButton("확인",
@@ -192,8 +184,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                         }
                     });
         }
-        else if(beacon == true && usim == false)
-        {
+        else if(beacon == true && usim == false) {
             builder.setTitle("출석 실패");
             builder.setMessage("USIM 상태를 확인해주세요.");
             builder.setPositiveButton("확인",
@@ -203,8 +194,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                         }
                     });
         }
-        else
-        {
+        else {
             builder.setTitle("출석 성공");
             builder.setMessage("정상적으로 출석이 되었습니다.");
             builder.setPositiveButton("확인",

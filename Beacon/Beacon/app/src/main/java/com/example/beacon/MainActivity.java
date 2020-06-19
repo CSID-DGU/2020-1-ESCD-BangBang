@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         Button professor = findViewById(R.id.professor_button);
         Button student = findViewById(R.id.student_button);
 
-
-
         professor.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -47,5 +45,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }// onCreate()..
-
 }// MainActivity class..

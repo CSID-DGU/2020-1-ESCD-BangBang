@@ -39,8 +39,7 @@
             android:background="#FFAE90"
             android:text = "출석 시작"
             android:layout_gravity="center"
-            >
-        </Button>
+            ></Button>
 
         <Button
             android:id="@+id/restart"
@@ -50,7 +49,6 @@
             android:layout_marginRight="20dp"
             android:background="#F5DAD7"
             android:text="새로고침"></Button>
-
     </LinearLayout>
 
     <ListView

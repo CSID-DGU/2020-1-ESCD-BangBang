@@ -57,7 +57,6 @@ public class S_Class_Detail extends AppCompatActivity {
 
         tablelayout.addView(tableRow);// tableLayout에 tableRow 추가
 
-
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(
                 TableLayout.LayoutParams.MATCH_PARENT, tablelayout.getHeight());
         params.height = 3;
@@ -68,7 +67,5 @@ public class S_Class_Detail extends AppCompatActivity {
 
         tablelayout.addView(line);
         tablelayout.addView(tableRow2);
-
-
     }
 }
