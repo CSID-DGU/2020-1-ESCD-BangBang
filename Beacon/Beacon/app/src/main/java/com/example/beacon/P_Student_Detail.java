@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class P_Student_Detail extends AppCompatActivity {
 
-
     String modified_attd = "";
     private int absent_cnt = 0;
     private String[][] sample;
@@ -70,14 +69,12 @@ public class P_Student_Detail extends AppCompatActivity {
         else
             sample = Attendance.sample1;
 
-
         for(int i = 0 ; i < 15 ; i++) {
             TextView textView = new TextView(this);
             textView.setText(sample[0][i]);
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(20);
-            if(textView.getText() == "X")
-            {
+            if(textView.getText() == "X") {
                 textView.setTextColor(Color.rgb(255,0,0));
                 absent_cnt++;
             }
@@ -100,7 +97,6 @@ public class P_Student_Detail extends AppCompatActivity {
             tableRow2.addView(textViews.get(i+15));		// tableRow에 view 추가
         }
 
-
         tablelayout.addView(tableRow);// tableLayout에 tableRow 추가
         tablelayout.addView(tableRow2);
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(
@@ -114,7 +110,6 @@ public class P_Student_Detail extends AppCompatActivity {
         tablelayout.addView(line);
 
         absent_count.setText(Integer.toString(absent_cnt));
-
 
         //Click Listener
         modify.setOnClickListener(new View.OnClickListener() {

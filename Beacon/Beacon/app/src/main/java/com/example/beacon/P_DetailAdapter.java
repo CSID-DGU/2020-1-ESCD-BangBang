@@ -19,8 +19,7 @@ public class P_DetailAdapter  extends BaseAdapter {
     LayoutInflater mLayoutInflater = null;
     ArrayList<Student> students;
 
-    public P_DetailAdapter(Context context, ArrayList<Student> students)
-    {
+    public P_DetailAdapter(Context context, ArrayList<Student> students) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(mContext);
         this.students = students;
@@ -58,8 +57,7 @@ public class P_DetailAdapter  extends BaseAdapter {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        if(position == 0)
-        {
+        if(position == 0) {
             for(int i = 0 ; i < 15 ; i++) {
                 TextView textView = new TextView(mContext);
                 textView.setText(Attendance.sample1[0][i]);
@@ -81,8 +79,7 @@ public class P_DetailAdapter  extends BaseAdapter {
                 tableRow2.addView(textView);		// tableRow에 view 추가
             }
         }
-        if(position == 1)
-        {
+        if(position == 1) {
             for(int i = 0 ; i < 15 ; i++) {
                 TextView textView = new TextView(mContext);
                 textView.setText(Attendance.sample2[0][i]);
@@ -104,8 +101,7 @@ public class P_DetailAdapter  extends BaseAdapter {
                 tableRow2.addView(textView);		// tableRow에 view 추가
             }
         }
-        if(position == 2)
-        {
+        if(position == 2) {
             for(int i = 0 ; i < 15 ; i++) {
                 TextView textView = new TextView(mContext);
                 textView.setText(Attendance.sample3[0][i]);
@@ -127,8 +123,7 @@ public class P_DetailAdapter  extends BaseAdapter {
                 tableRow2.addView(textView);		// tableRow에 view 추가
             }
         }
-        if(position == 3)
-        {
+        if(position == 3) {
             for(int i = 0 ; i < 15 ; i++) {
                 TextView textView = new TextView(mContext);
                 textView.setText(Attendance.sample4[0][i]);
@@ -152,7 +147,6 @@ public class P_DetailAdapter  extends BaseAdapter {
         }
         tablelayout.addView(tableRow);// tableLayout에 tableRow 추가
         tablelayout.addView(tableRow2);
-
 
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(
                  TableLayout.LayoutParams.MATCH_PARENT, tablelayout.getHeight());

@@ -15,9 +15,7 @@ public class P_menu_Adapter extends BaseAdapter {
      LayoutInflater mLayoutInflater = null;
      ArrayList<Course> courses;
 
-
-    public P_menu_Adapter(Context context, ArrayList<Course> courses)
-    {
+    public P_menu_Adapter(Context context, ArrayList<Course> courses) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(mContext);
         this.courses = courses;
@@ -26,6 +24,7 @@ public class P_menu_Adapter extends BaseAdapter {
     public int getCount() {
         return courses.size();
     }
+
     @Override
     public Object getItem(int position) {
         return courses.get(position);
