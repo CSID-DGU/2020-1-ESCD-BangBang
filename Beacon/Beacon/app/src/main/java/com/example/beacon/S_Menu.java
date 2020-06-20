@@ -27,6 +27,7 @@ import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class S_Menu extends AppCompatActivity implements BeaconConsumer {
@@ -34,6 +35,8 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
     SampleData sample = new SampleData();
     private BeaconManager beaconManager;
     private List<Beacon> beaconList = new ArrayList<>();
+    String name = "";
+    String state = "";
     Boolean beacon = false;
     Boolean usim = false;
 
@@ -47,17 +50,19 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         // ibeacon layout
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        beaconManager.bind(this);
 
         Button attd = findViewById(R.id.attd_button);
 
         attd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notification(true, true);
+                if(getCourse())
+                    notification(true, true);
                 show_dialog(true, true);
             }
         });
+
+
 
         //ListView Setting
         ListView listView = findViewById(R.id.student_list);
@@ -73,20 +78,28 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 startActivity(intent);
             }
         });
+
+
+
+
+
         class NewRunnable implements Runnable {
             @Override
             public void run() {
                     try{
-                        Thread.sleep(3000);
-                        notification(true, true);
+                        if(getCourse())
+                        {
+                            Thread.sleep(3000);
+                            notification(true, true);
+                        }
                     } catch(Exception e)
                     {
                     }
                 }
         }
-        NewRunnable nr = new NewRunnable() ;
-        Thread t = new Thread(nr) ;
-        t.start() ;
+        NewRunnable nr = new NewRunnable();
+        Thread t = new Thread(nr);
+        t.start();
     }
 
     @Override
@@ -94,13 +107,13 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-                beacon = true;
                 TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                beacon = true;
                 if(tm.getSimState() == TelephonyManager.SIM_STATE_ABSENT)
                 {
                     usim = false;
                 }
-                else
+                else if(tm.getSimState() == TelephonyManager.SIM_STATE_READY)
                 {
                     usim = true;
                 }
@@ -123,9 +136,21 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         } catch (RemoteException ignored) {    }
     }
 
+
+    //출석 결과 Push알림
     public void notification(Boolean beacon, Boolean usim)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+
+        beaconManager.bind(this);
+
+        if(tm.getSimState() == TelephonyManager.SIM_STATE_ABSENT)
+            usim = false;
+        else if(tm.getSimState() == TelephonyManager.SIM_STATE_READY)
+            usim = true;
+        else
+            usim = false;
 
         if(beacon == false && usim == false)
         {
@@ -147,9 +172,11 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         }
         else
         {
+            Calendar calendar = Calendar.getInstance();
             builder.setSmallIcon(R.mipmap.ic_launcher);
-            builder.setContentTitle("출석 성공");
-            builder.setContentText("출석이 정상적으로 처리되었습니다.");
+            builder.setContentTitle("출결 상태 : " + this.state);
+            builder.setContentText(this.name + " : " + calendar.get(Calendar.HOUR) + "시 " +
+                    calendar.get(Calendar.MINUTE) + "분");
         }
 
         // 사용자가 탭을 클릭하면 자동 제거
@@ -166,47 +193,64 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         notificationManager.notify(1, builder.build());
     }
 
+    //사용자가 수동으로 출석을 한 경우.
     void show_dialog(Boolean beacon, Boolean usim)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        if(beacon == false && usim == false)
+        if(getCourse())
         {
-            builder.setTitle("출석 실패");
-            builder.setMessage("블루투스와 USIM 상태를 확인해주세요.");
-            builder.setPositiveButton("확인",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //DataBase에 변경된 내용 송신
-                        }
-                    });
-        }
-        else if(beacon == false && usim == true)
-        {
-            builder.setTitle("출석 실패");
-            builder.setMessage("블루투스 상태를 확인해주세요.");
-            builder.setPositiveButton("확인",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //DataBase에 변경된 내용 송신
-                        }
-                    });
-        }
-        else if(beacon == true && usim == false)
-        {
-            builder.setTitle("출석 실패");
-            builder.setMessage("USIM 상태를 확인해주세요.");
-            builder.setPositiveButton("확인",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //DataBase에 변경된 내용 송신
-                        }
-                    });
+            if(beacon == false && usim == false)
+            {
+                builder.setTitle("출석 실패");
+                builder.setMessage("블루투스와 USIM 상태를 확인해주세요.");
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //DataBase에 변경된 내용 송신
+                            }
+                        });
+            }
+            else if(beacon == false && usim == true)
+            {
+                builder.setTitle("출석 실패");
+                builder.setMessage("블루투스 상태를 확인해주세요.");
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //DataBase에 변경된 내용 송신
+                            }
+                        });
+            }
+            else if(beacon == true && usim == false)
+            {
+                builder.setTitle("출석 실패");
+                builder.setMessage("USIM 상태를 확인해주세요.");
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //DataBase에 변경된 내용 송신
+                            }
+                        });
+            }
+            else
+            {
+                Calendar calendar = Calendar.getInstance();
+                builder.setTitle("출결 상태 : " + this.state);
+                builder.setMessage(this.name + " : " + calendar.get(Calendar.HOUR) + "시 " +
+                        calendar.get(Calendar.MINUTE) + "분");
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //DataBase에 변경된 내용 송신
+                            }
+                        });
+            }
         }
         else
         {
-            builder.setTitle("출석 성공");
-            builder.setMessage("정상적으로 출석이 되었습니다.");
+            builder.setTitle("출석 시간이 아닙니다.");
+            builder.setMessage("시간표를 확인해주세요.");
             builder.setPositiveButton("확인",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -214,8 +258,187 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                         }
                     });
         }
-
-
         builder.show();
+    }
+
+    Boolean getCourse() {
+        Calendar calendar = Calendar.getInstance();
+
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Database.date[0]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - Database.date1_start_time < 0.17 && Database.date1_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = Database.name;
+                return true;
+            }
+            else if(Database.date1_end_time > time && Database.date1_start_time < time)
+            {
+                this.state = "지각";
+                this.name = Database.name;
+                return true;
+
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == Database.date[1]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - Database.date2_start_time < 0.17 && Database.date2_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = Database.name;
+                return true;
+
+            }
+            else if(Database.date2_end_time > time && Database.date2_start_time < time)
+            {
+                this.state = "지각";
+                this.name = Database.name;
+                return true;
+
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == OS.date[0]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - OS.date1_start_time < 0.17 && OS.date1_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = OS.name;
+                return true;
+
+            }
+            else if(OS.date1_end_time > time && OS.date1_start_time < time)
+            {
+                this.state = "지각";
+                this.name = OS.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == OS.date[1]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - OS.date2_start_time < 0.17 && OS.date2_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = OS.name;
+                return true;
+            }
+            else if(OS.date2_end_time > time && OS.date2_start_time < time)
+            {
+                this.state = "지각";
+                this.name = OS.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == SW.date[0]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - SW.date1_start_time < 0.17 && SW.date1_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = SW.name;
+                return true;
+            }
+            else if(SW.date1_end_time > time && SW.date1_start_time < time)
+            {
+                this.state = "지각";
+                this.name = SW.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == SW.date[1]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - SW.date2_start_time < 0.17 && SW.date2_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = SW.name;
+                return true;
+            }
+            else if(SW.date2_end_time > time && SW.date2_start_time < time)
+            {
+                this.state = "지각";
+                this.name = SW.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == BasicP.date[0]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - BasicP.date1_start_time < 0.17 && BasicP.date1_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = BasicP.name;
+                return true;
+            }
+            else if(BasicP.date1_end_time > time && BasicP.date1_start_time < time)
+            {
+                this.state = "지각";
+                this.name = BasicP.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == BasicP.date[1]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - BasicP.date2_start_time < 0.17 && BasicP.date2_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = BasicP.name;
+                return true;
+            }
+            else if(BasicP.date2_end_time > time && BasicP.date2_start_time < time)
+            {
+                this.state = "지각";
+                this.name = BasicP.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == CCP.date[0]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - CCP.date1_start_time < 0.17 && CCP.date1_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = CCP.name;
+                return true;
+            }
+            else if(CCP.date1_end_time > time && CCP.date1_start_time < time)
+            {
+                this.state = "지각";
+                this.name = CCP.name;
+                return true;
+            }
+            else
+                return false;
+        }
+        else if (calendar.get(Calendar.DAY_OF_WEEK) == CCP.date[0]) {
+            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            if (time - CCP.date2_start_time < 0.17 && CCP.date2_start_time <= time)
+            {
+                this.state = "출석";
+                this.name = CCP.name;
+                return true;
+            }
+            else if(CCP.date2_end_time > time && CCP.date2_start_time < time)
+            {
+                this.state = "지각";
+                this.name = CCP.name;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        return false;
     }
 }
