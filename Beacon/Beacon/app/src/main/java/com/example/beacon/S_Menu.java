@@ -81,8 +81,6 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
 
 
 
-
-
         class NewRunnable implements Runnable {
             @Override
             public void run() {
@@ -237,7 +235,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
             {
                 Calendar calendar = Calendar.getInstance();
                 builder.setTitle("출결 상태 : " + this.state);
-                builder.setMessage(this.name + " : " + calendar.get(Calendar.HOUR) + "시 " +
+                builder.setMessage(this.name + " : " + calendar.get(Calendar.HOUR_OF_DAY) + "시 " +
                         calendar.get(Calendar.MINUTE) + "분");
                 builder.setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {
@@ -249,6 +247,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         }
         else
         {
+            Calendar calendar = Calendar.getInstance();
             builder.setTitle("출석 시간이 아닙니다.");
             builder.setMessage("시간표를 확인해주세요.");
             builder.setPositiveButton("확인",
@@ -261,11 +260,12 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         builder.show();
     }
 
-    Boolean getCourse() {
+    Boolean getCourse()
+    {
         Calendar calendar = Calendar.getInstance();
 
         if (calendar.get(Calendar.DAY_OF_WEEK) == Database.date[0]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - Database.date1_start_time < 0.17 && Database.date1_start_time <= time)
             {
                 this.state = "출석";
@@ -283,7 +283,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == Database.date[1]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - Database.date2_start_time < 0.17 && Database.date2_start_time <= time)
             {
                 this.state = "출석";
@@ -302,7 +302,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == OS.date[0]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - OS.date1_start_time < 0.17 && OS.date1_start_time <= time)
             {
                 this.state = "출석";
@@ -320,7 +320,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == OS.date[1]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - OS.date2_start_time < 0.17 && OS.date2_start_time <= time)
             {
                 this.state = "출석";
@@ -337,7 +337,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == SW.date[0]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - SW.date1_start_time < 0.17 && SW.date1_start_time <= time)
             {
                 this.state = "출석";
@@ -354,7 +354,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == SW.date[1]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - SW.date2_start_time < 0.17 && SW.date2_start_time <= time)
             {
                 this.state = "출석";
@@ -371,7 +371,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == BasicP.date[0]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - BasicP.date1_start_time < 0.17 && BasicP.date1_start_time <= time)
             {
                 this.state = "출석";
@@ -388,7 +388,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == BasicP.date[1]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - BasicP.date2_start_time < 0.17 && BasicP.date2_start_time <= time)
             {
                 this.state = "출석";
@@ -405,7 +405,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == CCP.date[0]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - CCP.date1_start_time < 0.17 && CCP.date1_start_time <= time)
             {
                 this.state = "출석";
@@ -422,7 +422,7 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
                 return false;
         }
         else if (calendar.get(Calendar.DAY_OF_WEEK) == CCP.date[0]) {
-            double time = calendar.get(Calendar.HOUR) + (double)(calendar.get(Calendar.MINUTE) / 60);
+            double time = calendar.get(Calendar.HOUR_OF_DAY) + ((double)calendar.get(Calendar.MINUTE) / 60.0);
             if (time - CCP.date2_start_time < 0.17 && CCP.date2_start_time <= time)
             {
                 this.state = "출석";
