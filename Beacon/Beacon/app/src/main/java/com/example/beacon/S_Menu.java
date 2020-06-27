@@ -68,7 +68,6 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer, AutoPer
         attd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                recreate();
                 show_dialog(beacon);
             }
         });
@@ -87,24 +86,6 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer, AutoPer
             }
         });
 
-//        class NewRunnable implements Runnable {
-//            @Override
-//            public void run() {
-//                    try{
-//                        if(getCourse())
-//                        {
-//                            beaconManager.bind(consumer);
-//                            Thread.sleep(3000);
-//                            notification(beacon);
-//                        }
-//                    } catch(Exception e)
-//                    {
-//                    }
-//                }
-//        }
-//        NewRunnable nr = new NewRunnable();
-//        Thread t = new Thread(nr);
-//        t.start();
         if(getCourse())
         {
             beaconManager.bind(this);
