@@ -14,58 +14,66 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.pedro.library.AutoPermissions;
+import com.pedro.library.AutoPermissionsListener;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
-public class S_Menu extends AppCompatActivity implements BeaconConsumer {
+public class S_Menu extends AppCompatActivity implements BeaconConsumer, AutoPermissionsListener {
 
     SampleData sample = new SampleData();
+    private Context context = this;
     private BeaconManager beaconManager;
-    private List<Beacon> beaconList = new ArrayList<>();
     String name = "";
     String state = "";
     Boolean beacon = false;
     Boolean usim = false;
+    String beaconUUID = "e2c56db5-dffb-48d2-b060-d0f5a71096e0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_s__menu);
 
+        AutoPermissions.Companion.loadAllPermissions(this,101); // AutoPermissions
         //Beacon Setting
         beaconManager = BeaconManager.getInstanceForApplication(this);
         // ibeacon layout
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
+        ListView listView = findViewById(R.id.student_list);
         Button attd = findViewById(R.id.attd_button);
 
         attd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getCourse())
-                    notification(true, true);
-                show_dialog(true, true);
+//                recreate();
+                show_dialog(beacon);
             }
         });
 
-
-
         //ListView Setting
-        ListView listView = findViewById(R.id.student_list);
         final P_menu_Adapter myAdapter = new P_menu_Adapter(this, sample.getCourses());
 
         listView.setAdapter(myAdapter);
@@ -79,70 +87,69 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
             }
         });
 
-
-
-        class NewRunnable implements Runnable {
-            @Override
-            public void run() {
-                    try{
-                        if(getCourse())
-                        {
-                            Thread.sleep(3000);
-                            notification(true, true);
-                        }
-                    } catch(Exception e)
-                    {
-                    }
-                }
+//        class NewRunnable implements Runnable {
+//            @Override
+//            public void run() {
+//                    try{
+//                        if(getCourse())
+//                        {
+//                            beaconManager.bind(consumer);
+//                            Thread.sleep(3000);
+//                            notification(beacon);
+//                        }
+//                    } catch(Exception e)
+//                    {
+//                    }
+//                }
+//        }
+//        NewRunnable nr = new NewRunnable();
+//        Thread t = new Thread(nr);
+//        t.start();
+        if(getCourse())
+        {
+            beaconManager.bind(this);
         }
-        NewRunnable nr = new NewRunnable();
-        Thread t = new Thread(nr);
-        t.start();
     }
 
     @Override
     public void onBeaconServiceConnect() {
+        beaconManager.removeAllMonitorNotifiers();
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-                TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                Toast.makeText(context, "비콘 연결됨", Toast.LENGTH_SHORT).show();
                 beacon = true;
-                if(tm.getSimState() == TelephonyManager.SIM_STATE_ABSENT)
-                {
-                    usim = false;
-                }
-                else if(tm.getSimState() == TelephonyManager.SIM_STATE_READY)
-                {
-                    usim = true;
-                }
-                notification(beacon, usim);
+                notification(beacon);
             }
 
             @Override
             public void didExitRegion(Region region) {
-                //Log.i(TAG, "I no longer see an beacon");
+                Toast.makeText(context, "비콘 연결 끊김", Toast.LENGTH_SHORT).show();
+                beacon = false;
+                notification(beacon);
             }
 
             @Override
             public void didDetermineStateForRegion(int state, Region region) {
-                //Log.i(TAG, "I have just switched from seeing/not seeing beacons: "+state);
             }
+
         });
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
-        } catch (RemoteException ignored) {    }
+            beaconManager.startMonitoringBeaconsInRegion(new Region("beacon", Identifier.parse(beaconUUID), null, null));
+        } catch (RemoteException e) {    }
+    }// onBeaconServiceConnect()..
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        beaconManager.unbind(this);
     }
-
-
     //출석 결과 Push알림
-    public void notification(Boolean beacon, Boolean usim)
+    public void notification(Boolean beacon)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
         TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-
-        beaconManager.bind(this);
-
         if(tm.getSimState() == TelephonyManager.SIM_STATE_ABSENT)
             usim = false;
         else if(tm.getSimState() == TelephonyManager.SIM_STATE_READY)
@@ -150,16 +157,16 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         else
             usim = false;
 
-        if(beacon == false && usim == false)
+        if(beacon == false && this.usim == false)
         {
             builder.setSmallIcon(R.mipmap.ic_launcher);
-            builder.setContentTitle("출석 싪패");
+            builder.setContentTitle("출석 실패");
             builder.setContentText("블루투스 또는 디바이스 USIM 상태를 확인해주세요");
         }
         else if(beacon == false && usim == true)
         {
             builder.setSmallIcon(R.mipmap.ic_launcher);
-            builder.setContentTitle("출석 싪패");
+            builder.setContentTitle("출석 실패");
             builder.setContentText("블루투스 상태를 확인해주세요");
         }
         else if(beacon == true && usim == false)
@@ -192,10 +199,16 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
     }
 
     //사용자가 수동으로 출석을 한 경우.
-    void show_dialog(Boolean beacon, Boolean usim)
+    void show_dialog(Boolean beacon)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        if(tm.getSimState() == TelephonyManager.SIM_STATE_ABSENT)
+            usim = false;
+        else if(tm.getSimState() == TelephonyManager.SIM_STATE_READY)
+            usim = true;
+        else
+            usim = false;
         if(getCourse())
         {
             if(beacon == false && usim == false)
@@ -247,7 +260,6 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         }
         else
         {
-            Calendar calendar = Calendar.getInstance();
             builder.setTitle("출석 시간이 아닙니다.");
             builder.setMessage("시간표를 확인해주세요.");
             builder.setPositiveButton("확인",
@@ -440,5 +452,16 @@ public class S_Menu extends AppCompatActivity implements BeaconConsumer {
         }
 
         return false;
+    }
+
+    //AutoPermission
+    @Override
+    public void onDenied(int i, String[] strings) {
+
+    }
+
+    @Override
+    public void onGranted(int i, String[] strings) {
+
     }
 }
